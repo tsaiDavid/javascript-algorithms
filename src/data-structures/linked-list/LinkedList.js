@@ -1,7 +1,8 @@
 import LinkedListNode from "./LinkedListNode";
 
 export default class LinkedList {
-  constructor() {
+  constructor(comparator) {
+    // this.comparator = comparator;
     this.head = null;
     this.tail = null;
   }
@@ -30,6 +31,42 @@ export default class LinkedList {
     }
 
     return this;
+  }
+
+  find(obj) {
+    if (!this.head) {
+      return null;
+    }
+
+    let currentNode = this.head;
+    let foundNode = null;
+
+    while (currentNode.next) {
+      // if (this.comparator) {
+      //   if (this.comparator(currentNode.value)) {
+      //     foundNode = currentNode;
+      //     break;
+      //   }
+      // }
+
+      if (obj.value) {
+        if (currentNode.value === obj.value) {
+          foundNode = currentNode;
+          break;
+        }
+      }
+
+      if (obj.callback) {
+        if (obj.callback(currentNode.value)) {
+          foundNode = currentNode;
+          break;
+        }
+      }
+
+      currentNode = currentNode.next;
+    }
+
+    return foundNode;
   }
 
   delete(value) {
