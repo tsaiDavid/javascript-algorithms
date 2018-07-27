@@ -1,58 +1,42 @@
-import LinkedList from '../linked-list/LinkedList';
+import LinkedList from "../linked-list/LinkedList";
 
 export default class Stack {
   constructor() {
-    this.linkedList = new LinkedList();
+    this.linkedlist = new LinkedList();
   }
 
-  /**
-   * @return {boolean}
-   */
-  isEmpty() {
-    return !this.linkedList.tail;
+  push(val) {
+    this.linkedlist.append(val);
   }
 
-  /**
-   * @return {*}
-   */
   peek() {
+    if (!this.linkedlist.tail) return null;
+    return this.linkedlist.tail.value;
+  }
+
+  isEmpty() {
+    return !this.linkedlist.head && !this.linkedlist.tail;
+  }
+
+  pop() {
     if (this.isEmpty()) {
       return null;
     }
-
-    return this.linkedList.tail.value;
+    const deleted = this.linkedlist.deleteTail();
+    return deleted.value;
   }
 
-  /**
-   * @param {*} value
-   */
-  push(value) {
-    this.linkedList.append(value);
+  toString(cb) {
+    return this.linkedlist.toString(cb);
   }
 
-  /**
-   * @return {*}
-   */
-  pop() {
-    const removedTail = this.linkedList.deleteTail();
-    return removedTail ? removedTail.value : null;
-  }
-
-  /**
-   * @return {*[]}
-   */
   toArray() {
-    return this.linkedList
-      .toArray()
-      .map(linkedListNode => linkedListNode.value)
-      .reverse();
-  }
+    const retArray = [];
 
-  /**
-   * @param {function} [callback]
-   * @return {string}
-   */
-  toString(callback) {
-    return this.linkedList.toString(callback);
+    while (!this.isEmpty()) {
+      retArray.push(this.linkedlist.deleteTail().value);
+    }
+
+    return retArray;
   }
 }
