@@ -1,9 +1,20 @@
 import LinkedListNode from './LinkedListNode';
 
 export default class LinkedList {
-  constructor(value) {
+  constructor() {
     this.head = null;
     this.tail = null;
+  }
+
+  prepend(value) {
+    const newNode = new LinkedListNode(value);
+    if (!this.tail && !this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
   }
 
   append(value) {
@@ -19,14 +30,13 @@ export default class LinkedList {
 
   toString() {
     let node = this.head;
-    let retStr = '';
+    const retChars = [];
 
-    while (node && node.next) {
-      console.log(node)
-      retStr += node.toString();
+    while (node) {
+      retChars.push(node.value);
       node = node.next;
     }
 
-    return retStr;
+    return retChars.join(',');
   }
 }
