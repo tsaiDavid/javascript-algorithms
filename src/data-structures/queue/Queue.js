@@ -21,4 +21,18 @@ export default class Queue {
 
     return this.linkedlist.toString(stringifier);
   }
+
+  peek() {
+    if (!this.linkedlist.head) {
+      return null;
+    }
+
+    return this.linkedlist.head.value;
+  }
+
+  isEmpty() {
+    const ll = this.linkedlist;
+
+    return ll.head === null && ll.tail === null;
+  }
 }
