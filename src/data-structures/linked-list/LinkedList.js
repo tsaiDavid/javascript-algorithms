@@ -15,6 +15,8 @@ export default class LinkedList {
       newNode.next = this.head;
       this.head = newNode;
     }
+
+    return this;
   }
 
   append(value) {
@@ -26,6 +28,8 @@ export default class LinkedList {
       this.tail.next = newNode;
       this.tail = this.tail.next;
     }
+
+    return this;
   }
 
   delete(value) {
@@ -97,12 +101,16 @@ export default class LinkedList {
     return deletedHead;
   }
 
-  toString() {
+  toString(cb) {
     let node = this.head;
     const retChars = [];
 
     while (node) {
-      retChars.push(node.value);
+      if (cb) {
+        retChars.push(cb(node.value));
+      } else {
+        retChars.push(node.value);
+      }
       node = node.next;
     }
 
