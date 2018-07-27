@@ -31,7 +31,7 @@ describe("LinkedList", () => {
     expect(linkedList.toString()).toBe("3,2,1");
   });
 
-  xit("should delete node by value from linked list", () => {
+  it("should delete node by value from linked list", () => {
     const linkedList = new LinkedList();
 
     expect(linkedList.delete(5)).toBeNull();

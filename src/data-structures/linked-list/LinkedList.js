@@ -29,7 +29,31 @@ export default class LinkedList {
   }
 
   delete(value) {
-    // let deletedNode;
+    let deletedNode = null;
+
+    while (this.head && this.head.value === value) {
+      deletedNode = this.head;
+      this.head = this.head.next;
+    }
+
+    let currentNode = this.head;
+
+    if (currentNode !== null) {
+      while (currentNode.next) {
+        if (currentNode.next.value === value) {
+          deletedNode = currentNode.next;
+          currentNode.next = currentNode.next.next;
+        } else {
+          currentNode = currentNode.next;
+        }
+      }
+    }
+
+    if (this.tail && this.tail.value === value) {
+      this.tail = currentNode;
+    }
+
+    return deletedNode;
   }
 
   deleteTail() {
