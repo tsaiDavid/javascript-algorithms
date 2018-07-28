@@ -41,7 +41,7 @@ export default class LinkedList {
     let currentNode = this.head;
     let foundNode = null;
 
-    while (currentNode.next) {
+    while (currentNode) {
       // if (this.comparator) {
       //   if (this.comparator(currentNode.value)) {
       //     foundNode = currentNode;
@@ -49,18 +49,14 @@ export default class LinkedList {
       //   }
       // }
 
-      if (obj.value) {
-        if (currentNode.value === obj.value) {
-          foundNode = currentNode;
-          break;
-        }
+      if (obj.value && currentNode.value === obj.value) {
+        foundNode = currentNode;
+        break;
       }
 
-      if (obj.callback) {
-        if (obj.callback(currentNode.value)) {
-          foundNode = currentNode;
-          break;
-        }
+      if (obj.callback && obj.callback(currentNode.value)) {
+        foundNode = currentNode;
+        break;
       }
 
       currentNode = currentNode.next;
