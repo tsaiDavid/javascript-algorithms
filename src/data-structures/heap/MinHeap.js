@@ -1,3 +1,5 @@
+import { get } from "http";
+
 export default class MinHeap {
   constructor() {
     this.data = [null]; // to ensure the array index for actual data starts at 0
@@ -32,8 +34,6 @@ export default class MinHeap {
   }
 
   add(value) {
-    const minVal = this.peek();
-
     this.data.push(value);
     let lastIdx = this.getLastIndex();
     let parentIdx = this.getParent(lastIdx);
@@ -48,6 +48,45 @@ export default class MinHeap {
       lastIdx = parentIdx;
       parentIdx = this.getParent(lastIdx);
     }
+  }
+
+  // remove and return min element
+  poll() {
+    // move last element into the first
+    let returnVal = this.data[1];
+    this.data[1] = this.data.pop();
+
+    let currIdx = 1;
+    let leftIdx = this.getLeft(currIdx);
+    let rightIdx = this.getRight(currIdx);
+
+    while (
+      this.data[currIdx] < this.data[leftIdx] ||
+      this.data[currIdx] < this.data[rightIdx]
+    ) {
+      if (this.data[leftIdx] <= this.data[rightIdx]) {
+        [this.data[leftIdx], this.data[currIdx]] = [
+          this.data[currIdx],
+          this.data[leftIdx]
+        ];
+
+        currIdx = leftIdx;
+      }
+
+      if (this.data[rightIdx] >= this.data[leftIdx]) {
+        [this.data[rightIdx], this.data[currIdx]] = [
+          this.data[currIdx],
+          this.data[rightIdx]
+        ];
+
+        currIdx = rightIdx;
+      }
+
+      leftIdx = this.getLeft(currIdx);
+      rightIdx = this.getRight(currIdx);
+    }
+
+    return returnVal;
   }
 
   toString() {
