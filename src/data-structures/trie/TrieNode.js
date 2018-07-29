@@ -7,7 +7,7 @@ export default class TrieNode {
   }
 
   toString() {
-    let childrenAsString = [...this.children.getKeys()].toString();
+    let childrenAsString = this.suggestChildren().toString();
     childrenAsString = childrenAsString ? `:${childrenAsString}` : "";
 
     const isCompleteString = this.isCompleteWord ? "*" : "";
@@ -20,5 +20,18 @@ export default class TrieNode {
     }
 
     return this.children.get(char);
+  }
+
+  getChild(char) {
+    return this.children.get(char);
+  }
+
+  hasChild(char) {
+    return this.children.get(char) ? true : false;
+  }
+
+  suggestChildren() {
+    let childrenArray = [...this.children.getKeys()];
+    return childrenArray;
   }
 }
