@@ -1,60 +1,24 @@
-import HashTable from '../hash-table/HashTable';
-
+import HashTable from "../hash-table/HashTable";
 export default class TrieNode {
-  /**
-   * @param {string} character
-   * @param {boolean} isCompleteWord
-   */
-  constructor(character, isCompleteWord = false) {
-    this.character = character;
-    this.isCompleteWord = isCompleteWord;
+  constructor(char, isWord) {
+    this.character = char;
+    this.isCompleteWord = isWord;
     this.children = new HashTable();
   }
 
-  /**
-   * @param {string} character
-   * @return {TrieNode}
-   */
-  getChild(character) {
-    return this.children.get(character);
+  toString() {
+    let childrenAsString = [...this.children.getKeys()].toString();
+    childrenAsString = childrenAsString ? `:${childrenAsString}` : "";
+
+    const isCompleteString = this.isCompleteWord ? "*" : "";
+    return `${this.character}${isCompleteString}${childrenAsString}`;
   }
 
-  /**
-   * @param {string} character
-   * @param {boolean} isCompleteWord
-   * @return {TrieNode}
-   */
-  addChild(character, isCompleteWord = false) {
-    if (!this.children.has(character)) {
-      this.children.set(character, new TrieNode(character, isCompleteWord));
+  addChild(char, isWord) {
+    if (!this.children.has(char)) {
+      this.children.set(char, new TrieNode(char, isWord));
     }
 
-    return this.children.get(character);
-  }
-
-  /**
-   * @param {string} character
-   * @return {boolean}
-   */
-  hasChild(character) {
-    return this.children.has(character);
-  }
-
-  /**
-   * @return {string[]}
-   */
-  suggestChildren() {
-    return [...this.children.getKeys()];
-  }
-
-  /**
-   * @return {string}
-   */
-  toString() {
-    let childrenAsString = this.suggestChildren().toString();
-    childrenAsString = childrenAsString ? `:${childrenAsString}` : '';
-    const isCompleteString = this.isCompleteWord ? '*' : '';
-
-    return `${this.character}${isCompleteString}${childrenAsString}`;
+    return this.children.get(char);
   }
 }
