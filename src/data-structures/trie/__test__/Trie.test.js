@@ -1,6 +1,6 @@
 import Trie from "../Trie";
 
-xdescribe("Trie", () => {
+describe("Trie", () => {
   it("should create trie", () => {
     const trie = new Trie();
 
